@@ -2,6 +2,7 @@ import "./App.css";
 import React, { Component } from "react";
 import LandingPage from "./Component/LandingPage";
 import ufo from "./Component/ufo";
+import Game from "./Component/Game";
 
 class App extends Component {
   constructor(props) {
@@ -12,8 +13,10 @@ class App extends Component {
       guesses: [],
       word: "",
       losingMess: "",
+      incorrectCount: 0,
     };
     this.startGame = this.startGame.bind(this);
+    this.reset = this.reset.bind(this);
   }
   randomNumGen(array) {
     let length = array.length;
@@ -38,6 +41,7 @@ class App extends Component {
       guesses: [],
       word: "",
       losingMess: "",
+      incorrectCount: 0,
     });
   }
 
@@ -67,12 +71,17 @@ class App extends Component {
     console.log(ufo[0]);
 
     return (
-      <div>
-        <h1>UFO Hangman</h1>
-        <LandingPage startGame={this.startGame} />
-        <h1>{this.state.word}</h1>
+      <div className="App-container">
+        <h1 className="title">UFO Hangman</h1>
+        {/* <LandingPage startGame={this.startGame} /> */}
+        {/* <h1>{this.state.word}</h1>
         <h1>{this.state.losingMess}</h1>
-        <pre className="testa">{ufo[this.state.guesses.length]}</pre>
+        <pre className="testa">{ufo[this.state.guesses.length]}</pre> */}
+        {this.state.word ? (
+          <Game reset={this.reset} />
+        ) : (
+          <LandingPage startGame={this.startGame} />
+        )}
       </div>
     );
   }
