@@ -10,13 +10,15 @@ class App extends Component {
     this.state = {
       dictionary: [],
       losingDic: [],
-      guesses: [],
+      guesses: new Set([]),
       word: "",
       losingMess: "",
       incorrectCount: 0,
     };
     this.startGame = this.startGame.bind(this);
     this.reset = this.reset.bind(this);
+    this.appendGuesses = this.appendGuesses.bind(this);
+    this.addToIncorrect = this.addToIncorrect.bind(this);
   }
   randomNumGen(array) {
     let length = array.length;
@@ -26,11 +28,6 @@ class App extends Component {
   startGame() {
     let newWord = this.randomNumGen(this.state.dictionary);
     let losingmes = this.randomNumGen(this.state.losingDic);
-    // if (newWord) {
-    //   this.setState({
-    //     word: newWord,
-    //   });
-    // }
     this.setState({
       word: newWord,
       losingMess: losingmes,
@@ -38,10 +35,19 @@ class App extends Component {
   }
   reset() {
     this.setState({
-      guesses: [],
+      guesses: new Set([]),
       word: "",
       losingMess: "",
       incorrectCount: 0,
+    });
+  }
+  appendGuesses(newGuess) {
+    this.setState({ guesses: this.state.guesses.add(newGuess) });
+  }
+  addToIncorrect() {
+    console.log("this is running", this.state.incorrectCount);
+    this.setState({
+      incorrectCount: this.state.incorrectCount + 1,
     });
   }
 
@@ -52,7 +58,6 @@ class App extends Component {
         let words = text.split("\n");
         words.pop();
         this.setState({ dictionary: [...words] });
-        // console.log("test", typeof text.split("\n"));
       });
 
     fetch("./messages.txt")
@@ -62,23 +67,23 @@ class App extends Component {
         let words = text.split("\n");
         words.pop();
         this.setState({ losingDic: words });
-        // console.log("test", typeof text.split("\n"));
       });
   }
 
   render() {
-    console.log("dictionary", this.state.losingDic);
-    console.log(ufo[0]);
-
     return (
       <div className="App-container">
         <h1 className="title">UFO Hangman</h1>
-        {/* <LandingPage startGame={this.startGame} /> */}
-        {/* <h1>{this.state.word}</h1>
-        <h1>{this.state.losingMess}</h1>
-        <pre className="testa">{ufo[this.state.guesses.length]}</pre> */}
         {this.state.word ? (
-          <Game reset={this.reset} />
+          <Game
+            reset={this.reset}
+            guesses={this.state.guesses}
+            word={this.state.word}
+            losingMess={this.state.losingMess}
+            incorrectCount={this.state.incorrectCount}
+            appendGuesses={this.appendGuesses}
+            addToIncorrect={this.addToIncorrect}
+          />
         ) : (
           <LandingPage startGame={this.startGame} />
         )}
