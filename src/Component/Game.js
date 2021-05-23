@@ -67,7 +67,7 @@ export default class Game extends Component {
         </div>
         <div className="top-right">
           <div className="top-right"> Wrong Guesses: {incorrectCount} of 6</div>
-          <div>{this.state.wrongAnswer ? { losingMess } : null}</div>
+          <div>{this.state.wrongAnswer ? `${losingMess}` : null}</div>
         </div>
         <div>
           <pre className="ufo">{ufo[incorrectCount]}</pre>
