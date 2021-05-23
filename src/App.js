@@ -1,8 +1,7 @@
-import "./App.css";
 import React, { Component } from "react";
 import LandingPage from "./Component/LandingPage";
-import ufo from "./Component/ufo";
 import Game from "./Component/Game";
+import "./App.css";
 
 class App extends Component {
   constructor(props) {
@@ -45,7 +44,6 @@ class App extends Component {
     this.setState({ guesses: this.state.guesses.add(newGuess) });
   }
   addToIncorrect() {
-    console.log("this is running", this.state.incorrectCount);
     this.setState({
       incorrectCount: this.state.incorrectCount + 1,
     });

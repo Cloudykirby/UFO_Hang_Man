@@ -9,7 +9,7 @@ export default class LandingPage extends Component {
         <p className="story">
           You have woken up and noticed that you have been abducted by aliens,
           you need to guess the letters of the code to stop the UFO from
-          abducting another person. You have 5 incorrect guesses before the
+          abducting another person. You have 6 incorrect guesses before the
           system locks you out, and the aliens will notice that you have escaped
           from your cell. Click start to begin!
         </p>

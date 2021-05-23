@@ -24,6 +24,40 @@
   text-align: center;
 }
 
-.title {
+/* .title {
   margin-bottom: 200px;
+} */
+.button {
+  padding: 14px 28px;
+  /* align-items: center; */
+}
+
+.hidden_word {
+  text-align: center;
+  font-size: 50px;
+}
+.ufo {
+  font-size: 20px;
+}
+.error {
+  color: red;
+  text-align: center;
+}
+.buttons-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.text-box {
+  align-items: center;
+  font-size: 20px;
+  margin-left: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.gameover-container {
+  display: flex;
+  flex-direction: column;
 }

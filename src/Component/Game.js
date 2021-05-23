@@ -6,6 +6,7 @@ export default class Game extends Component {
     super(props);
     this.state = {
       currentGuess: "",
+      wrongAnswer: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.guessedLetter = this.guessedLetter.bind(this);
@@ -14,11 +15,9 @@ export default class Game extends Component {
 
   handleChange(e) {
     let lowercase = e.target.value.toLowerCase();
-    console.log(lowercase);
     this.setState({ currentGuess: lowercase });
   }
   guessedLetter() {
-    console.log(this.props.word);
     return this.props.word
       .split("")
       .map((letter) => (this.props.guesses.has(letter) ? letter : " _ "));
@@ -29,7 +28,11 @@ export default class Game extends Component {
       this.props.appendGuesses(curr);
       if (!this.props.word.includes(curr)) {
         this.props.addToIncorrect();
-      }
+        this.setState({ wrongAnswer: true });
+      } else
+        (this.setState: {
+          wrongAnswer: false,
+        });
     }
     this.setState({
       currentGuess: "",
@@ -37,9 +40,18 @@ export default class Game extends Component {
   }
 
   render() {
-    const { reset, incorrectCount, word, guesses } = this.props;
+    const { reset, incorrectCount, word, guesses, losingMess } = this.props;
     const gameOver = incorrectCount >= 6;
-    console.log(incorrectCount, "in game");
+    if (gameOver) {
+      return (
+        <div className="gameover-container">
+          <h1 className="gameover">Game Over</h1>
+          <button className="button" onClick={reset}>
+            reset
+          </button>
+        </div>
+      );
+    }
 
     return (
       <div className="game-container">
@@ -53,20 +65,26 @@ export default class Game extends Component {
             ? "Please choose another letter"
             : null}
         </div>
-        <div className="top-right"> Wrong Guesses: {incorrectCount} of 6</div>
+        <div className="top-right">
+          <div className="top-right"> Wrong Guesses: {incorrectCount} of 6</div>
+          <div>{this.state.wrongAnswer ? { losingMess } : null}</div>
+        </div>
         <div>
           <pre className="ufo">{ufo[incorrectCount]}</pre>
         </div>
         <p className="hidden_word">{!gameOver ? this.guessedLetter() : word}</p>
         <input
+          className="text-box"
           type="text"
           placeholder="Enter one Letter"
           onChange={this.handleChange}
           value={this.state.currentGuess}
         />
         <div className="buttons-container">
-          <button onClick={reset}>reset</button>
-          <button type="submit" onClick={this.handleClick}>
+          <button className="button" onClick={reset}>
+            reset
+          </button>
+          <button className="button" type="submit" onClick={this.handleClick}>
             Submit
           </button>
         </div>
